@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="/static/css/styles.css">
+<title>Treinador de Ritmo — Versão Precisa</title>
+
+<!-- CSS externo -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="wrap">
+    <header><h1>Treinador de Ritmo — Tap Tempo</h1><div class="small">Pressione <strong>ESPAÇO</strong> para marcar o tempo</div></header>
+
+    <div class="card">
+      <div>
+        <div class="row controls">
+          <div>
+            <label for="bpm">BPM</label><br>
+            <select id="bpm"><option>60</option><option>70</option><option selected>80</option><option>90</option><option>100</option><option>110</option><option>120</option></select>
+          </div>
+
+          <div>
+            <label for="beats">Número de batidas</label><br>
+            <input id="beats" type="number" min="4" max="128" value="16" />
+          </div>
+
+          <div>
+            <label for="tol">Tolerância (ms)</label><br>
+            <input id="tol" type="number" min="20" max="500" value="150" />
+          </div>
+
+          <div style="align-self:flex-end">
+            <button id="startBtn" class="btn-start">Iniciar Treino</button>
+            <button id="stopBtn" class="btn-stop" style="display:none">Parar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="meter">
+        <div id="pulse" aria-live="polite">Pronto</div>
+        <div class="feedback">
+          <div id="liveJudgment" class="small">Aguardando</div>
+          <div id="liveDiff" style="font-weight:700; margin-top:6px">– ms</div>
+          <div style="margin-top:6px" class="small">Toques registrados: <span id="count">0</span></div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="log">
+          <strong>Log de batidas</strong>
+          <ul id="hitsList" class="hits"></ul>
+        </div>
+
+        <div>
+          <div class="stat">
+            <strong>Estatísticas</strong>
+            <div style="margin-top:10px">Acurácia: <span id="accuracy">-</span></div>
+            <div>Média do erro: <span id="avgErr">-</span> ms</div>
+            <div>Melhor erro (mín): <span id="minErr">-</span> ms</div>
+            <div>Pior erro (máx): <span id="maxErr">-</span> ms</div>
+          </div>
+
+          <div class="stat" style="margin-top:10px">
+            <strong>Controles & dicas</strong>
+            <p class="small" style="margin:6px 0">Dica: clique em <em>Iniciar</em>, aguarde o countdown e pressione <strong>ESPAÇO</strong> no pulso.</p>
+            <p class="small">Tolerância define o que é considerado acerto (em ms).</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>Treinos rápidos — sem backend. Para salvar progresso, integramos mais tarde.</footer>
+    </div>
+  </div>
+
+<!-- JS externo -->
+
+<script src="/static/js/trainer.js"></script>
+</body>
+</html>
