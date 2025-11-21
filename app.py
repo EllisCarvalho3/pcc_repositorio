@@ -49,3 +49,67 @@ def history():
     return jsonify([dict(row) for row in rows])
 
 # listar treinos
+
+
+# interface
+from flask import send_file
+import csv
+import io
+
+@app.route("/historico")
+def historico():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, bpm, beats, accuracy, avg_error, min_error, max_error, timestamp 
+        FROM treinos ORDER BY timestamp DESC
+    """)
+    treinos = cursor.fetchall()
+    conn.close()
+
+    return render_template("historico.html", treinos=treinos)
+
+@app.route("/exportar_csv")
+def exportar_csv():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, bpm, beats, accuracy, avg_error, min_error, max_error, timestamp 
+        FROM treinos ORDER BY timestamp DESC
+    """)
+    treinos = cursor.fetchall()
+    conn.close()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["id","bpm","beats","accuracy","avg_error","min_error","max_error","timestamp"])
+
+    for t in treinos:
+        writer.writerow(t)
+
+    output.seek(0)
+
+    return send_file(
+        io.BytesIO(output.getvalue().encode("utf-8")),
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="historico_treinos.csv"
+    )
+
+# interface
+
+# grafico
+@app.route("/grafico")
+def grafico():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT accuracy, avg_error, timestamp FROM treinos ORDER BY timestamp ASC")
+    dados = cursor.fetchall()
+    conn.close()
+
+    return render_template("grafico.html", dados=dados)
+
+# grafico

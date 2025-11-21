@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Histórico de Treinos</title>
+<link rel="stylesheet" href="/static/css/styles.css">
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+  background: #0b1220;
+  border-radius: 8px;
+  overflow: hidden;
+}
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+th {
+  background: #071423;
+  color: #7dd3fc;
+}
+tr:nth-child(even) {
+  background: #0f1a2f;
+}
+tr:hover {
+  background: #132040;
+}
+.btn{
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  display:inline-block;
+  margin-top: 12px;
+}
+.btn-csv{
+  background:#7dd3fc;
+  color:#022;
+}
+.btn-graph{
+  background:#86efac;
+  color:#033;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<h1>Histórico de Treinos</h1>
+
+<a href="/exportar_csv" class="btn btn-csv">Exportar CSV</a>
+<a href="/grafico" class="btn btn-graph">Ver Gráfico</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>BPM</th>
+      <th>Beats</th>
+      <th>Acurácia (%)</th>
+      <th>Erro Médio (ms)</th>
+      <th>Melhor</th>
+      <th>Pior</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in treinos %}
+      <tr>
+        <td>{{ t[0] }}</td>
+        <td>{{ t[1] }}</td>
+        <td>{{ t[2] }}</td>
+        <td>{{ t[3] }}</td>
+        <td>{{ t[4] }}</td>
+        <td>{{ t[5] }}</td>
+        <td>{{ t[6] }}</td>
+        <td>{{ t[7] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>

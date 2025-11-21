@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Gráfico de Evolução</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+<div class="wrap">
+<h1>Evolução dos Treinos</h1>
+
+<canvas id="chart1"></canvas>
+
+<script>
+const dados = {{ dados | tojson }};
+
+const labels = dados.map(d => d[2]);
+const acuracias = dados.map(d => d[0]);
+const erros = dados.map(d => d[1]);
+
+new Chart(document.getElementById("chart1"), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: "Acurácia (%)",
+        data: acuracias,
+        borderWidth: 2
+      },
+      {
+        label: "Erro médio (ms)",
+        data: erros,
+        borderWidth: 2
+      }
+    ]
+  }
+});
+</script>
+</div>
+</body>
+</html>
+        
